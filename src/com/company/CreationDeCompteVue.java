@@ -125,7 +125,7 @@ public class CreationDeCompteVue extends JFrame {
                     ps.setString(2,nom);
                     ps.setString(3,prenom);
                     ps.setString(4,motDePasse);
-                    ps.executeQuery();
+                    ps.executeUpdate();
                     JOptionPane.showMessageDialog(null,"le compte à bien été crée");
                 }catch (Exception e2){
                     System.out.println("--> Exception : " + e2);

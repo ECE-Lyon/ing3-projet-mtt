@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-public class MenuPrincipalAdministrateurVue {
+public class AjoutFilmVue {
 
 
     private String genre;
@@ -23,9 +23,7 @@ public class MenuPrincipalAdministrateurVue {
     private JTextField champTitre;
     private JTextField champDuree;
     private JTextField champDate;
-    JTextField ChampsNombreDeTicket;
     private final ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur;
-    private int  a;
     private JLabel l;
     private Connection conn = null;
     private final ResultSet rs = null;
@@ -34,7 +32,7 @@ public class MenuPrincipalAdministrateurVue {
 
 
 
-    public MenuPrincipalAdministrateurVue(ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur) throws HeadlessException {
+    public AjoutFilmVue(ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur) throws HeadlessException {
         conn = ConnexionBD.Connexion();
         JFrame jFrame;
         this.controllerMenuPrincipalAdministrateur = controllerMenuPrincipalAdministrateur;
@@ -46,7 +44,6 @@ public class MenuPrincipalAdministrateurVue {
         JPanel panelMenuPrincipalAdministrateur = (JPanel) jFrame.getContentPane();
         jFrame.setLayout(new GridLayout(8, 1));
         jFrame.add(titrePage());
-        panelMenuPrincipalAdministrateur.add(NombreDeFilm());
         panelMenuPrincipalAdministrateur.add(titreFilm());
         panelMenuPrincipalAdministrateur.add(genreFilm());
         panelMenuPrincipalAdministrateur.add(dureeFilm());
@@ -126,7 +123,7 @@ public class MenuPrincipalAdministrateurVue {
                     ps.setString(2,titre);
                     ps.setString(3,duree);
                     ps.setString(4,date);
-                    ps.executeQuery();
+                    ps.executeUpdate();
                     JOptionPane.showMessageDialog(null,"le compte à bien été crée");
                 }catch (Exception e2){
                     System.out.println("--> Exception : " + e2);
@@ -138,8 +135,7 @@ public class MenuPrincipalAdministrateurVue {
                         System.out.println("--> Exception : " + e3);
                     }
                 }
-                controllerMenuPrincipalAdministrateur.MiseAJourFilm(champGenre.getText(), champTitre.getText(), champDate.getText(), champDuree.getText(), (ImageIcon) l.getIcon());
-                JOptionPane.showMessageDialog(null, "bravo votre compte vient d'être crée");
+
                 champTitre.setText("");
                 champDate.setText("");
                 champDuree.setText("");
@@ -151,32 +147,14 @@ public class MenuPrincipalAdministrateurVue {
         return Validation;
     }
 
-    public JPanel NombreDeFilm(){
 
-        JPanel panelNombreDeFilm = new JPanel(new FlowLayout(FlowLayout.CENTER,5,0));
-        JLabel NombreDeFilm = new JLabel("Combien de film voulez vous ajouter:");
-        panelNombreDeFilm.add(NombreDeFilm);
-        ChampsNombreDeTicket = new JTextField(20);
-        panelNombreDeFilm.add(ChampsNombreDeTicket);
-        JButton valider = new JButton("Valider");
-        panelNombreDeFilm.add(valider);
-        valider.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                a = Integer.parseInt(ChampsNombreDeTicket.getText());
-
-            }
-        });
-        return panelNombreDeFilm;
-
-    }
     public JPanel Photo(){
 
         JPanel panelPhoto = new JPanel(new GridLayout(1,2));
         l = new JLabel();
         l.setBounds(0,0,10,10);
-        panelPhoto.add(l);
         panelPhoto.add(boutonPhoto());
+        panelPhoto.add(l);
 
         return panelPhoto;
     }
@@ -228,7 +206,7 @@ public class MenuPrincipalAdministrateurVue {
 
 
         ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur = new ControllerMenuPrincipalAdministrateur(film);
-        MenuPrincipalAdministrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdministrateurVue(controllerMenuPrincipalAdministrateur);
+        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue(controllerMenuPrincipalAdministrateur);
 
 
 

@@ -79,7 +79,7 @@ public class LoginVue extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 identifiant = champsIdentifiant.getText();
                 motDePasse = champsPasseword.getText();
-                String requete = "select * from Client where identifiant = ? and motdepasse = ?  ";
+                String requete = "select * from Client where id_client = ? and motdepasse = ?  ";
                 try{
                     ps = conn.prepareStatement(requete);
                     ps.setString(1,identifiant);
@@ -95,7 +95,7 @@ public class LoginVue extends JFrame {
                         FilmModel film = new FilmModel();
                         JOptionPane.showMessageDialog(null, "connexion reussi");
                         ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur1 = new ControllerMenuPrincipalAdministrateur(film);
-                        MenuPrincipalAdministrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdministrateurVue(controllerMenuPrincipalAdministrateur1);
+                        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue(controllerMenuPrincipalAdministrateur1);
 
                     }
                     else{JOptionPane.showMessageDialog(null,"mot de passe ou identifiant incorrect veuillez ressayer");}

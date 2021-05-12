@@ -10,7 +10,7 @@ public class Main {
 
 
         MenuPrincipalVue menuPrincipal = new MenuPrincipalVue();
-        MenuPrincipalAdministrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdministrateurVue(controllerMenuPrincipalAdministrateur);
+        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue(controllerMenuPrincipalAdministrateur);
 
 
 
