@@ -1,9 +1,9 @@
 package com.company;
 
 import javax.swing.*;
-import java.util.Observable;
 
-public class FilmModel extends Observable {
+
+public class FilmModel {
 
 
     private int identifiant; //numero du film
@@ -36,8 +36,7 @@ public class FilmModel extends Observable {
     public void setTitre(String titre) {
 
         this.titre = titre;
-        setChanged();
-        notifyObservers(this);
+
     }
 
     public String getDate() {
@@ -47,8 +46,7 @@ public class FilmModel extends Observable {
     public void setDate(String date) {
 
         this.date = date;
-        setChanged();
-        notifyObservers(this);
+
     }
 
     public String getGenre() {
@@ -58,8 +56,7 @@ public class FilmModel extends Observable {
     public void setGenre(String genre) {
 
         this.genre = genre;
-        setChanged();
-        notifyObservers(this);
+
     }
 
     public String getRunningtime() {
@@ -69,8 +66,7 @@ public class FilmModel extends Observable {
     public void setRunningtime(String runningtime) {
 
         this.runningtime = runningtime;
-        setChanged();
-        notifyObservers(this);
+
     }
 
 

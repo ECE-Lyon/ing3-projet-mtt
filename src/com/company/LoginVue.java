@@ -68,8 +68,7 @@ public class LoginVue extends JFrame {
     public JPanel panel4()
     {
 
-        String motdepasse = "bobo";
-        String Identifiant = "lolo";
+
         JPanel quatre = new JPanel(new FlowLayout(FlowLayout.CENTER , 100 , 20));
         JButton valider = new JButton("valider");
         quatre.add(valider);
@@ -87,7 +86,7 @@ public class LoginVue extends JFrame {
                     rs = ps.executeQuery();
                     if(rs.next()){
                         JOptionPane.showMessageDialog(null, "connexion reussi");
-                        MenuPrincipalVue menuPrincipal = new MenuPrincipalVue();
+                        MenuPrincipalVue2 menuPrincipal = new MenuPrincipalVue2();
 
 
                     }
@@ -95,7 +94,7 @@ public class LoginVue extends JFrame {
                         FilmModel film = new FilmModel();
                         JOptionPane.showMessageDialog(null, "connexion reussi");
                         ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur1 = new ControllerMenuPrincipalAdministrateur(film);
-                        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue(controllerMenuPrincipalAdministrateur1);
+                        MenuPrincipalAdminstrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdminstrateurVue();
 
                     }
                     else{JOptionPane.showMessageDialog(null,"mot de passe ou identifiant incorrect veuillez ressayer");}

@@ -17,6 +17,8 @@ public class MenuPrincipalAdminstrateurVue {
     private ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur;
     private JTable table;
     private DefaultTableModel model;
+    private ImageIcon format = null;
+
 
     public MenuPrincipalAdminstrateurVue() {
         this.conn = ConnexionBD.Connexion();
@@ -37,24 +39,34 @@ public class MenuPrincipalAdminstrateurVue {
         {
 
 
-            String query = "SELECT * FROM film";
+
 
             Statement stm = conn.createStatement();
-            res = stm.executeQuery(query);
+            res = stm.executeQuery("SELECT*FROM film");
 
-            String columns[] = { "titre", "genre", "durée" ,"date de sortie","image"};
-            String data[][] = new String[8][3];
+            String columns[] = { "id","titre", "genre", "durée" ,"date","nombre de place","prix de la place","image"};
+            Object data[][] = new Object[100][8];
 
             int i = 0;
             while (res.next()) {
+                int id = res.getInt("id_film");
                 String titre = res.getString("titre");
                 String genre = res.getString("genre");
                 String duree = res.getString("duree");
-                String date = res.getString("date_sortie");
-                data[i][0] = titre;
-                data[i][1] = genre;
-                data[i][2] = duree;
-                data[i][2] = date;
+                String date = res.getString("date");
+                byte[] image = res.getBytes("image");
+                String place  = res.getString("place");
+                String prix  = res.getString("prix");
+
+                data[i][0] = id;
+                data[i][1] = titre;
+                data[i][2] = genre;
+                data[i][3] = duree;
+                data[i][4] = date;
+                data[i][5] = image;
+                data[i][6] = place;
+                data[i][7] = prix;
+
 
                 i++;
             }
@@ -73,12 +85,12 @@ public class MenuPrincipalAdminstrateurVue {
         } catch(SQLException e) {
             System.out.println("--> Exception : " + e);
         }finally{
-        try{
-            ps.close();
-            res.close();
-        }catch (Exception e3){
-            System.out.println("--> Exception : " + e3);
-        }
+            try{
+
+                res.close();
+            }catch (Exception e3){
+                System.out.println("--> Exception : " + e3);
+            }
     }
 
         return panelTableauFilm;
@@ -94,22 +106,38 @@ public class MenuPrincipalAdminstrateurVue {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                    // vérifier d'abord la ligne sélectionnée
-                    if(table.getSelectedRow() != -1) {
-                        // supprimer la ligne sélectionnée du modèle de table
-                        model.removeRow(table.getSelectedRow());
-                        JOptionPane.showMessageDialog(null, "Deleted successfully");
+
+
+                int row = table.getSelectedRow();
+                String selected = model.getValueAt(row, 0).toString();
+
+                if (row >= 0) {
+
+                    try {
+
+                        String sql = "delete from film where id_film = ?";
+                        ps = conn.prepareStatement(sql);
+                        ps.setString( 1, selected );
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null,"Le film a été supprimé");
+                    }
+                    catch (Exception w) {
+                        System.out.println("--> Exception : " + w);
 
                     }
+                    model.removeRow(row);
 
-            }
+                }
+                }
+
+
         });
         ajouter = new JButton("ajouter");
         panelBoutonSupprimerAjouter.add(ajouter);
         ajouter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AjoutFilmVue ajoutFilmVue = new AjoutFilmVue(controllerMenuPrincipalAdministrateur);
+                AjoutFilmVue ajoutFilmVue = new AjoutFilmVue();
             }
         });
 
@@ -117,6 +145,7 @@ public class MenuPrincipalAdminstrateurVue {
 
         return panelBoutonSupprimerAjouter;
     }
+
 
     public static void main(String[] args) {
 

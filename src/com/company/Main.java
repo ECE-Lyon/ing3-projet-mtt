@@ -10,11 +10,11 @@ public class Main {
 
 
         MenuPrincipalVue menuPrincipal = new MenuPrincipalVue();
-        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue(controllerMenuPrincipalAdministrateur);
+        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue();
 
 
 
-        film.addObserver(menuPrincipal);
+
 
     }
 }

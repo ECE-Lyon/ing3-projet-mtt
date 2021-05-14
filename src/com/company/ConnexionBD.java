@@ -1,11 +1,16 @@
 package com.company;
+import javax.swing.*;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 
 
 public class ConnexionBD {
-    Connection conn = null;
+    private final Connection conn = null;
+    private String filename = null;
+    public static String path;
+
 
     public static Connection Connexion(){
         try{
@@ -18,6 +23,22 @@ public class ConnexionBD {
             System.out.println("--> SQLException : " + e);
             return null;
         }
+    }
+    public void filen(){
+
+        try{
+        JFileChooser choisir = new JFileChooser();
+        choisir.showOpenDialog(null);
+        File file = choisir.getSelectedFile();
+        filename = file.getAbsolutePath();
+        this.path = (filename);}
+        catch (Exception e9){
+            JOptionPane.showMessageDialog(null,"veuillez choisir une image");
+        }
+
+    }
+    public String getp(){
+        return path;
     }
     public static void main(String[] args) {
 
