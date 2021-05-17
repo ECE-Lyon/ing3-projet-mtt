@@ -162,7 +162,7 @@ public class AjoutFilmVue {
                 heure = champsHeure.getText();
                 try{
 
-                    ps =conn.prepareStatement("insert into film(genre,titre,duree,date, place,prix,image,heure_seance) values (?,?,?,?,?,?,?,?)");
+                    ps =conn.prepareStatement("insert into film(genre,titre,duree,date, place,prix,heure_seance,image) values (?,?,?,?,?,?,?,?)");
                     ps.setString(1,genre);
                     ps.setString(2,titre);
                     ps.setString(3,duree);
@@ -245,11 +245,7 @@ public class AjoutFilmVue {
 
     public static void main(String[] args) {
 
-
-
-        AjoutFilmVue menuPrincipalAdministrateur = new AjoutFilmVue();
-
-
+        AjoutFilmVue ajoutFilmVue = new AjoutFilmVue();
 
     }
 

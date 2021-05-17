@@ -14,7 +14,6 @@ public class MenuPrincipalAdminstrateurVue {
     private PreparedStatement ps = null;
     private JButton supprimer ;
     private JButton ajouter ;
-    private ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur;
     private JTable table;
     private DefaultTableModel model;
     private ImageIcon format = null;
@@ -22,7 +21,7 @@ public class MenuPrincipalAdminstrateurVue {
 
     public MenuPrincipalAdminstrateurVue() {
         this.conn = ConnexionBD.Connexion();
-        JFrame menuPrincipalAdmin = new JFrame("Menu principal");
+        JFrame menuPrincipalAdmin = new JFrame("Ajout film");
         menuPrincipalAdmin.setSize(600, 600);
         menuPrincipalAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         menuPrincipalAdmin.setVisible(true);
@@ -148,12 +147,6 @@ public class MenuPrincipalAdminstrateurVue {
 
 
     public static void main(String[] args) {
-
-
-
         MenuPrincipalAdminstrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdminstrateurVue();
-
-
-
     }
 }

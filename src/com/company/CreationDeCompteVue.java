@@ -21,7 +21,6 @@ public class CreationDeCompteVue extends JFrame {
     private JTextField champsPrenom;
     private  JTextField champsNom;
     private JPasswordField champsPasseword;
-    private ClientModel nouveauClient ;
     private Connection conn = null;
     private final ResultSet rs = null;
     private PreparedStatement ps = null;

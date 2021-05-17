@@ -8,7 +8,7 @@ import java.sql.*;
 
 
 public class LoginVue extends JFrame {
-    private ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur;
+
     private JPasswordField champsPasseword;
     private JTextField champsIdentifiant;
     private String identifiant;
@@ -91,9 +91,9 @@ public class LoginVue extends JFrame {
 
                     }
                     else if (identifiant.equals("Administrateur") && motDePasse.equals("motdepasseadmin")){
-                        FilmModel film = new FilmModel();
+
                         JOptionPane.showMessageDialog(null, "connexion reussi");
-                        ControllerMenuPrincipalAdministrateur controllerMenuPrincipalAdministrateur1 = new ControllerMenuPrincipalAdministrateur(film);
+
                         MenuPrincipalAdminstrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdminstrateurVue();
 
                     }

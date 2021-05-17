@@ -1,5 +1,7 @@
 package com.company;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.*;
@@ -18,20 +20,12 @@ public class MenuPrincipalVue2 {
     private JLabel champDate;
     private JLabel champPrix;
     private JLabel champPlace;
-    private JLabel genre;
-    private JLabel prix;
-    private JLabel heure;
-    private JLabel titre;
-    private JLabel duree;
-    private JLabel place;
-    private JLabel date;
     private static String ligne;
     private JTable table;
     private JLabel photo;
-    private JButton acheter;
-    private JButton valider;
     private JTextField champsNombreDeTicket;
-    private ImageIcon format = null;
+    private DefaultTableModel model;
+
 
     public MenuPrincipalVue2() {
         this.conn = ConnexionBD.Connexion();
@@ -85,7 +79,7 @@ public class MenuPrincipalVue2 {
                 i++;
             }
 
-            DefaultTableModel model = new DefaultTableModel(data, columns);
+            model = new DefaultTableModel(data, columns);
             table = new JTable(model);
             table.setShowGrid(true);
             table.setShowVerticalLines(true);
@@ -157,7 +151,7 @@ public class MenuPrincipalVue2 {
     public JPanel titreFilm()
     {
         JPanel panelTitreFilm = new JPanel(new FlowLayout(FlowLayout.CENTER , 50 , 5));
-        titre = new JLabel("Titre:");
+        JLabel titre = new JLabel("Titre:");
         panelTitreFilm.add(titre);
         champTitre = new JLabel();
         panelTitreFilm.add(champTitre);
@@ -167,7 +161,7 @@ public class MenuPrincipalVue2 {
     public JPanel placeFilm()
     {
         JPanel panelPlaceFilm = new JPanel(new FlowLayout(FlowLayout.CENTER , 50 , 5));
-        place = new JLabel("Place:");
+        JLabel place = new JLabel("Place:");
         panelPlaceFilm.add(place);
         champPlace= new JLabel();
         panelPlaceFilm.add(champPlace);
@@ -177,7 +171,7 @@ public class MenuPrincipalVue2 {
     public JPanel prixFilm()
     {
         JPanel panelPlaceFilm = new JPanel(new FlowLayout(FlowLayout.CENTER , 50 , 5));
-        prix = new JLabel("Prix:");
+        JLabel prix = new JLabel("Prix:");
         panelPlaceFilm.add(prix);
         champPrix= new JLabel();
         panelPlaceFilm.add(champPrix);
@@ -188,7 +182,7 @@ public class MenuPrincipalVue2 {
     public JPanel genreFilm()
     {
         JPanel panelGenreFilm = new JPanel(new FlowLayout(FlowLayout.CENTER , 50 , 5));
-        genre = new JLabel("Genre:");
+        JLabel genre = new JLabel("Genre:");
         panelGenreFilm.add(genre);
         champGenre = new JLabel();
         panelGenreFilm.add(champGenre);
@@ -198,7 +192,7 @@ public class MenuPrincipalVue2 {
     public JPanel dureeFilm()
     {
         JPanel panelDureeFilm = new JPanel(new FlowLayout(FlowLayout.CENTER , 50 , 5));
-        duree = new JLabel("Durée:");
+        JLabel duree = new JLabel("Durée:");
         panelDureeFilm.add(duree);
         champDuree = new JLabel();
         panelDureeFilm.add(champDuree);
@@ -207,7 +201,7 @@ public class MenuPrincipalVue2 {
     }
     public JPanel dateFilm() {
         JPanel panelDateFilm = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
-        date = new JLabel("Date:");
+        JLabel date = new JLabel("Date:");
         panelDateFilm.add(date);
         champDate = new JLabel();
         panelDateFilm.add(champDate);
@@ -215,7 +209,7 @@ public class MenuPrincipalVue2 {
     }
     public JPanel heureFilm() {
         JPanel panelHeureFilm = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5));
-        heure = new JLabel("Heure de la séance:");
+        JLabel heure = new JLabel("Heure de la séance:");
         panelHeureFilm.add(heure);
         champHeure = new JLabel();
         panelHeureFilm.add(champHeure);
@@ -233,9 +227,28 @@ public class MenuPrincipalVue2 {
 
     public JPanel reservation(){
         JPanel panelReservation = new JPanel();
-        acheter = new JButton("réservation");
+        JButton acheter = new JButton("réservation");
         panelReservation.add(acheter);
-        // mettre une fonction pour dire que ca place est bien reserver
+        acheter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = table.getSelectedRow();
+                String select = (String) model.getValueAt(row,2 );
+                if (row >= 0){
+                    try{
+                        String requet = "update film set place = where id_film = ?";
+                        ps = conn.prepareStatement(requet);
+                        ps.setString(1,(String) table.getValueAt(row,7));
+                        ps.setString(2,(String) table.getValueAt(row,0));
+                        ps.executeUpdate();
+                        ps.close();
+                    }catch(Exception e11){
+                        System.out.println("--> Exception : " + e);
+
+                    }
+                }
+            }
+        });
         return panelReservation;
     }
 
@@ -243,9 +256,8 @@ public class MenuPrincipalVue2 {
         JPanel panelNombreDeTicket = new JPanel(new FlowLayout(FlowLayout.CENTER , 20,5));
         champsNombreDeTicket = new JTextField(20);
         panelNombreDeTicket.add(champsNombreDeTicket);
-        valider = new JButton("Valider");
-        panelNombreDeTicket.add(valider);
-        // mettre une fonction pour dire que ca place est bien reserver
+
+
         return panelNombreDeTicket;
     }
 
@@ -270,9 +282,9 @@ public class MenuPrincipalVue2 {
                 String t6 = res.getString("prix");
                 champPrix.setText(t6);
                 String t7 = res.getString("heure_seance");
-                champPrix.setText(t7);
+                champHeure.setText(t7);
                 byte[] image = res.getBytes("image");
-                format = new ImageIcon(image);
+                ImageIcon format = new ImageIcon(image);
                 photo.setIcon(format);
             }
         }catch (Exception e5){
