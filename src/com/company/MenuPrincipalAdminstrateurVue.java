@@ -1,13 +1,18 @@
 package com.company;
 
+import org.h2.engine.DbObject;
+import org.h2.table.Table;
+import org.h2.upgrade.DbUpgrade;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.sql.*;
 
-public class MenuPrincipalAdminstrateurVue {
+public class MenuPrincipalAdminstrateurVue   {
 
     private Connection conn = null;
     private ResultSet res = null;
@@ -19,10 +24,11 @@ public class MenuPrincipalAdminstrateurVue {
     private ImageIcon format = null;
 
 
+
     public MenuPrincipalAdminstrateurVue() {
         this.conn = ConnexionBD.Connexion();
-        JFrame menuPrincipalAdmin = new JFrame("Ajout film");
-        menuPrincipalAdmin.setSize(600, 600);
+        JFrame menuPrincipalAdmin = new JFrame("Menu administarteur");
+        menuPrincipalAdmin.setSize(900, 900);
         menuPrincipalAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         menuPrincipalAdmin.setVisible(true);
         JPanel panelMenuPrincipalVue2= (JPanel) menuPrincipalAdmin.getContentPane();
@@ -36,9 +42,6 @@ public class MenuPrincipalAdminstrateurVue {
         JPanel panelTableauFilm = new JPanel();
         try
         {
-
-
-
 
             Statement stm = conn.createStatement();
             res = stm.executeQuery("SELECT*FROM film");
@@ -137,13 +140,18 @@ public class MenuPrincipalAdminstrateurVue {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AjoutFilmVue ajoutFilmVue = new AjoutFilmVue();
+
             }
         });
 
 
 
+
+
         return panelBoutonSupprimerAjouter;
     }
+
+
 
 
     public static void main(String[] args) {

@@ -22,7 +22,7 @@ public class CreationDeCompteVue extends JFrame {
     private  JTextField champsNom;
     private JPasswordField champsPasseword;
     private Connection conn = null;
-    private final ResultSet rs = null;
+    private ResultSet rs = null;
     private PreparedStatement ps = null;
 
 
@@ -118,24 +118,40 @@ public class CreationDeCompteVue extends JFrame {
                 motDePasse = champsPasseword.getText();
                 identifiant = champsIdentifiant.getText();
                 try{
-                    String requete2 = "insert into client(id_client,nom,prenom,motDePasse) values (?,?,?,?)";
+                    String requete2 = "select * from Client where id_client = ?";
                     ps =conn.prepareStatement(requete2);
                     ps.setString(1,identifiant);
-                    ps.setString(2,nom);
-                    ps.setString(3,prenom);
-                    ps.setString(4,motDePasse);
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null,"le compte à bien été crée");
-                }catch (Exception e2){
-                    System.out.println("--> Exception : " + e2);
-                }finally{
-                    try{
-                        ps.close();
-                        rs.close();
-                    }catch (Exception e3){
-                        System.out.println("--> Exception : " + e3);
+                    rs = ps.executeQuery();
+                    if (rs.next()){
+                        JOptionPane.showMessageDialog(null, "Cette identifiant est déjà utilisé veuillez en choisir un autre");
                     }
+                    else{
+                        try{
+                            String requete1 = "insert into client(id_client,nom,prenom,motDePasse) values (?,?,?,?)";
+                            ps =conn.prepareStatement(requete1);
+                            ps.setString(1,identifiant);
+                            ps.setString(2,nom);
+                            ps.setString(3,prenom);
+                            ps.setString(4,motDePasse);
+                            ps.executeUpdate();
+                            JOptionPane.showMessageDialog(null,"le compte à bien été crée");
+                        }catch (Exception e2){
+                            System.out.println("--> Exception : " + e2);
+                        }finally{
+                            try{
+                                ps.close();
+                                rs.close();
+                            }catch (Exception e3){
+                                System.out.println("--> Exception : " + e3);
+                            }
+                    }
+                }}catch (Exception e56){
+                    System.out.println("--> Exception : " + e56);
                 }
+
+
+
+
                 champsIdentifiant.setText("");
                 champsNom.setText("");
                 champsPasseword.setText("");

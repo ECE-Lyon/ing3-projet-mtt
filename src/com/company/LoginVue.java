@@ -13,7 +13,7 @@ public class LoginVue extends JFrame {
     private JTextField champsIdentifiant;
     private String identifiant;
     private String motDePasse;
-    Connection conn = null;
+    Connection conn ;
     ResultSet rs = null;
     PreparedStatement ps = null;
 
@@ -79,6 +79,7 @@ public class LoginVue extends JFrame {
                 identifiant = champsIdentifiant.getText();
                 motDePasse = champsPasseword.getText();
                 String requete = "select * from Client where id_client = ? and motdepasse = ?  ";
+
                 try{
                     ps = conn.prepareStatement(requete);
                     ps.setString(1,identifiant);
@@ -108,7 +109,7 @@ public class LoginVue extends JFrame {
             }
         });
 
-        JButton creeUnCompte= new JButton("cree un compte");
+        JButton creeUnCompte= new JButton("créer un compte");
         creeUnCompte.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

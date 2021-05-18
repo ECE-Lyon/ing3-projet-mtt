@@ -40,12 +40,6 @@ public class ConnexionBD {
     public String getp(){
         return path;
     }
-    public static void main(String[] args) {
 
-
-
-
-
-    }
 
 }

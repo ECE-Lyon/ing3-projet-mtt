@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class MenuPrincipalVue2 {
-    private Connection conn = null;
+    private Connection conn ;
     private ResultSet res = null;
     private PreparedStatement ps = null;
     private JLabel champGenre;
@@ -20,6 +20,7 @@ public class MenuPrincipalVue2 {
     private JLabel champDate;
     private JLabel champPrix;
     private JLabel champPlace;
+    private JLabel NombreDeTicket;
     private static String ligne;
     private JTable table;
     private JLabel photo;
@@ -54,8 +55,8 @@ public class MenuPrincipalVue2 {
             Statement stm = conn.createStatement();
             res = stm.executeQuery(query);
 
-            String columns[] = { "titre", "genre", "durée" ,"date de sortie","image","nombre de place ","prix","heure de la seance"};
-            Object data[][] = new Object[100][8];
+            String columns[] = {  "titre", "genre", "durée" ,"date de sortie","image","nombre de place ","prix","heure de la seance"};
+            Object data[][] = new Object[100][9];
 
             int i = 0;
             while (res.next()) {
@@ -67,6 +68,7 @@ public class MenuPrincipalVue2 {
                 String place  = res.getString("place");
                 String prix  = res.getString("prix");
                 String heure  = res.getString("heure_seance");
+
 
                 data[i][0] = titre;
                 data[i][1] = genre;
@@ -232,20 +234,26 @@ public class MenuPrincipalVue2 {
         acheter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int row = table.getSelectedRow();
-                String select = (String) model.getValueAt(row,2 );
-                if (row >= 0){
-                    try{
-                        String requet = "update film set place = where id_film = ?";
+                int row= table.getSelectedRow();
+                int nbplace= Integer.parseInt(champPlace.getText());
+                int nbplacereservees= Integer.parseInt(champsNombreDeTicket.getText());
+
+
+                if (nbplace>= nbplacereservees ){
+                if (row>=0){
+                    try {
+                        String requet= "update film set place='"+ (nbplace - nbplacereservees)+"'  where titre = ? ";
                         ps = conn.prepareStatement(requet);
-                        ps.setString(1,(String) table.getValueAt(row,7));
-                        ps.setString(2,(String) table.getValueAt(row,0));
+                        ps.setString(1,(String) model.getValueAt(row,0));
                         ps.executeUpdate();
                         ps.close();
-                    }catch(Exception e11){
-                        System.out.println("--> Exception : " + e);
-
+                        JOptionPane.showMessageDialog(null,"vous avez bien réservé "+ nbplacereservees +" place(s) prenez en photo votre écran comme preuve de réservation");
+                    } catch (Exception e10){
+                        System.out.println("--> Exception : " + e10);
                     }
+                }
+            }else{
+                    JOptionPane.showMessageDialog(null, "Il n'y a plus assez de place");
                 }
             }
         });
@@ -253,7 +261,11 @@ public class MenuPrincipalVue2 {
     }
 
     public JPanel nombreDeTicket(){
+
         JPanel panelNombreDeTicket = new JPanel(new FlowLayout(FlowLayout.CENTER , 20,5));
+        NombreDeTicket = new JLabel();
+        panelNombreDeTicket.add(NombreDeTicket);
+
         champsNombreDeTicket = new JTextField(20);
         panelNombreDeTicket.add(champsNombreDeTicket);
 

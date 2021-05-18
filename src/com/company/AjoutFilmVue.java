@@ -2,7 +2,6 @@ package com.company;
 
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-public class AjoutFilmVue {
+public class AjoutFilmVue   {
 
 
     private String genre;
@@ -32,19 +31,16 @@ public class AjoutFilmVue {
     private JTextField champDuree;
     private JTextField champDate;
     private Connection conn = null;
-    private final ResultSet rs = null;
     private PreparedStatement ps = null;
-    private ImageIcon format = null;
+    private final ImageIcon format = null;
     byte[]photo = null;
-
-
 
 
 
     public AjoutFilmVue() throws HeadlessException {
         conn = ConnexionBD.Connexion();
         JFrame jFrame;
-        jFrame = new JFrame("Menu principal administrateur");
+        jFrame = new JFrame("Ajout de film");
         jFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         jFrame.setSize(800, 800);
         jFrame.setLocationRelativeTo(null);
@@ -233,7 +229,7 @@ public class AjoutFilmVue {
                         System.out.println("--> Exception : " + e10);
                     }
                 }
-                champsPath.setText("");
+
             }
         });
 
@@ -248,5 +244,6 @@ public class AjoutFilmVue {
         AjoutFilmVue ajoutFilmVue = new AjoutFilmVue();
 
     }
+
 
 }
