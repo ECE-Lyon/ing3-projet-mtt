@@ -45,6 +45,7 @@ public class MenuPrincipalVue2 {
 
 
     public JPanel TableauDeFilm(){
+        // Tableau qui contiensra les information des films
         JPanel panel = new JPanel();
         try
         {
@@ -87,6 +88,7 @@ public class MenuPrincipalVue2 {
             table.setShowVerticalLines(true);
             JScrollPane pane = new JScrollPane(table);
             table.addMouseListener(new MouseListener() {
+                //Permet si on clique sur une ligne de deplacer les infomartions d'un film sur les JLabels present à droite
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     Deplace();
@@ -234,6 +236,7 @@ public class MenuPrincipalVue2 {
         acheter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 int row= table.getSelectedRow();
                 int nbplace= Integer.parseInt(champPlace.getText());
                 int nbplacereservees= Integer.parseInt(champsNombreDeTicket.getText());
@@ -241,6 +244,7 @@ public class MenuPrincipalVue2 {
 
                 if (nbplace>= nbplacereservees ){
                 if (row>=0){
+                    // Met à jour le nombre de place du film apres chaque réservation
                     try {
                         String requet= "update film set place='"+ (nbplace - nbplacereservees)+"'  where titre = ? ";
                         ps = conn.prepareStatement(requet);
@@ -275,6 +279,7 @@ public class MenuPrincipalVue2 {
 
     public void Deplace (){
         try{
+            //Méthode qui permet de changer les valeurs des JLabels avec les infomartions du films
             int row = table.getSelectedRow();
             this.ligne = (table.getModel().getValueAt(row,0).toString());
             String requet ="select * from film where titre ='"+ ligne +"' ";

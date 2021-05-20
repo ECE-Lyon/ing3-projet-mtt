@@ -11,7 +11,7 @@ public class ConnexionBD {
     private String filename = null;
     public static String path;
 
-
+    //permet la connexion a la base de données
     public static Connection Connexion(){
         try{
 
@@ -24,6 +24,7 @@ public class ConnexionBD {
             return null;
         }
     }
+    //Chemin pour choisir une photo
     public void filen(){
 
         try{

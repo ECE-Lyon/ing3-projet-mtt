@@ -1,9 +1,4 @@
 package com.company;
-
-import org.h2.engine.DbObject;
-import org.h2.table.Table;
-import org.h2.upgrade.DbUpgrade;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -14,7 +9,7 @@ import java.sql.*;
 
 public class MenuPrincipalAdminstrateurVue   {
 
-    private Connection conn = null;
+    private Connection conn= null ;
     private ResultSet res = null;
     private PreparedStatement ps = null;
     private JButton supprimer ;
@@ -22,6 +17,7 @@ public class MenuPrincipalAdminstrateurVue   {
     private JTable table;
     private DefaultTableModel model;
     private ImageIcon format = null;
+    private Statement stm;
 
 
 
@@ -36,14 +32,18 @@ public class MenuPrincipalAdminstrateurVue   {
         panelMenuPrincipalVue2.add(TableauDeFilm());
         panelMenuPrincipalVue2.add(boutonSupprimerAjouter());
 
+
+
     }
+
+
 
     public JPanel TableauDeFilm(){
         JPanel panelTableauFilm = new JPanel();
         try
         {
-
-            Statement stm = conn.createStatement();
+            //Création du tableau qui contendra les informations des films
+            stm = conn.createStatement();
             res = stm.executeQuery("SELECT*FROM film");
 
             String columns[] = { "id","titre", "genre", "durée" ,"date","nombre de place","prix de la place","image"};
@@ -105,6 +105,7 @@ public class MenuPrincipalAdminstrateurVue   {
         supprimer = new JButton("supprimer");
         panelBoutonSupprimerAjouter.add(supprimer);
         supprimer.addActionListener(new ActionListener() {
+            //Permet de supprimer un film
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -137,9 +138,11 @@ public class MenuPrincipalAdminstrateurVue   {
         ajouter = new JButton("ajouter");
         panelBoutonSupprimerAjouter.add(ajouter);
         ajouter.addActionListener(new ActionListener() {
+            //Permet d'ajouter un film
             @Override
             public void actionPerformed(ActionEvent e) {
-                AjoutFilmVue ajoutFilmVue = new AjoutFilmVue();
+                new AjoutFilmVue();
+
 
             }
         });

@@ -72,7 +72,7 @@ public class LoginVue extends JFrame {
         JPanel quatre = new JPanel(new FlowLayout(FlowLayout.CENTER , 100 , 20));
         JButton valider = new JButton("valider");
         quatre.add(valider);
-
+        //Vérification que le client existe ou que l'administrateur existe pour ouvrir la fenetre principal
         valider.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,7 +87,7 @@ public class LoginVue extends JFrame {
                     rs = ps.executeQuery();
                     if(rs.next()){
                         JOptionPane.showMessageDialog(null, "connexion reussi");
-                        MenuPrincipalVue2 menuPrincipal = new MenuPrincipalVue2();
+                        new MenuPrincipalVue2();
 
 
                     }
@@ -95,7 +95,7 @@ public class LoginVue extends JFrame {
 
                         JOptionPane.showMessageDialog(null, "connexion reussi");
 
-                        MenuPrincipalAdminstrateurVue menuPrincipalAdministrateur = new MenuPrincipalAdminstrateurVue();
+                        new MenuPrincipalAdminstrateurVue();
 
                     }
                     else{JOptionPane.showMessageDialog(null,"mot de passe ou identifiant incorrect veuillez ressayer");}
@@ -114,7 +114,7 @@ public class LoginVue extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                CreationDeCompteVue creationDeComptevue = new CreationDeCompteVue();
+                new CreationDeCompteVue();
 
 
 
@@ -131,7 +131,7 @@ public class LoginVue extends JFrame {
 
     public static void main(String[] args) {
 
-        LoginVue login = new LoginVue();
+        new LoginVue();
 
     }
 

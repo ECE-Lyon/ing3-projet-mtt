@@ -51,7 +51,7 @@ public class CreationDeCompteVue extends JFrame {
 
 
     }
-
+    // panel d'affichage pour que l'utilisateur puisse écrire les données qui lui sont demandées
     public JPanel titrePage()
     {
         JPanel un2 = new JPanel(new FlowLayout());
@@ -117,6 +117,7 @@ public class CreationDeCompteVue extends JFrame {
                 nom = champsNom.getText();
                 motDePasse = champsPasseword.getText();
                 identifiant = champsIdentifiant.getText();
+                // Vérification que l'indentifiant choisi est unique
                 try{
                     String requete2 = "select * from Client where id_client = ?";
                     ps =conn.prepareStatement(requete2);
@@ -125,6 +126,10 @@ public class CreationDeCompteVue extends JFrame {
                     if (rs.next()){
                         JOptionPane.showMessageDialog(null, "Cette identifiant est déjà utilisé veuillez en choisir un autre");
                     }
+                    else if (identifiant.equals("Administrateur")){
+                        JOptionPane.showMessageDialog(null, "Cette identifiant est déjà utilisé veuillez en choisir un autre");
+                    }
+                    // Insertion des informations clients dans la base de données
                     else{
                         try{
                             String requete1 = "insert into client(id_client,nom,prenom,motDePasse) values (?,?,?,?)";

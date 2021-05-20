@@ -60,7 +60,7 @@ public class AjoutFilmVue   {
 
 
     }
-
+    // panel d'affichage pour que l'Administarteur puisse écrire les données qui lui sont demandées pour un film
     public JPanel titrePage() {
         JPanel panelTitre = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
         JLabel titre = new JLabel("Page de saisie des films");
@@ -156,6 +156,7 @@ public class AjoutFilmVue   {
                 prix = champPrix.getText();
                 place = champPlace.getText();
                 heure = champsHeure.getText();
+                //Insertion des données du film dans la base de données
                 try{
 
                     ps =conn.prepareStatement("insert into film(genre,titre,duree,date, place,prix,heure_seance,image) values (?,?,?,?,?,?,?,?)");
@@ -187,6 +188,7 @@ public class AjoutFilmVue   {
                 champGenre.setText("");
                 champPlace.setText("");
                 champPrix.setText("");
+                champsHeure.setText("");
 
             }
         });
@@ -203,6 +205,7 @@ public class AjoutFilmVue   {
         panelBoutonPhoto.add(choixPhoto);
         panelBoutonPhoto.add(champsPath);
         choixPhoto.addActionListener(new ActionListener() {
+            //permet de connaitre le path de la photo
             @Override
             public void actionPerformed(ActionEvent e) {
                 ConnexionBD v = new ConnexionBD();
